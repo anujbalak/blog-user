@@ -127,28 +127,6 @@ export const updatePassword = async (id, oldPassword, password, confirmPassword,
     }
 }
 
-export const newPost = async (title, text) => {
-    try {
-        let result = null
-        const url = `${BACKEND_URL}posts/new`
-        
-        await fetch(url, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization,
-            },
-            body: JSON.stringify({title, text})
-        })
-        .then(response => response.json())
-        .then(response => result = response)
-        .catch(err => console.error(err));
-        return result;
-    } catch (err) {
-        console.error(err)
-    }
-}
-
 export const logout = async (accessToken, refreshToken) => {
     try {
         let result = null;

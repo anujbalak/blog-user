@@ -43,7 +43,6 @@ const Homepage = () => {
                     <Bouncy size="80" color="#1567ff" />  
                 </LoadingContainer>
             }
-            <Button path="posts/new" name="+"/>
             </HomeBody>
         </HomeComponent>
     )

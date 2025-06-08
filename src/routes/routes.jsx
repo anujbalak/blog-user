@@ -33,20 +33,12 @@ const routes = [
             },
             {
                 path: '/posts/:postid',
-                // loader: async ({params}) => {
-                //     let post = await fetchPost(params.id);
-                //     return {post};
-                // },
                 Component: Post,
             },
             {
                 path: '/account',
                 Component: Account,
             },
-            {
-                path: '/posts/new',
-                Component: NewPost
-            }
         ],
     },
 ]
