@@ -4,7 +4,7 @@ import Input, { InputComponent } from "../Input";
 import { SubmitButton } from "../../pages/signup";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../../Root";
-import { deleteComment, editComment, getUserById } from "../../requests/queries";
+import { deleteComment, editComment, getUserById, getAllComments } from "../../requests/queries";
 import {Textarea} from "../Textarea";
 
 
@@ -79,14 +79,25 @@ const LabelButton = styled.button`
 `
 
 
-export default function PostComments({comments, loading, setLoading}) {
+export default function PostComments({postComments}) {
+    const [comments, setComments] = useState(postComments)
     const [text, setText] = useState('');
-    const {user} = useOutletContext();
+    const {user, refresh, setRefresh, setLoading, setNotification} = useOutletContext();
     const {postid} = useParams()
     const navigate = useNavigate();
-    const [commentError, setCommentError] = useState(null);
+
+    useEffect(() => {
+        if (refresh) {
+            const getComments = async () => {
+                const result = await getAllComments(postid)
+                setComments(result)
+            }
+            getComments()
+        }
+    }, [refresh])
 
     const handleCommentAdd = async (e) => {
+        setLoading(true);
         e.preventDefault();
         const url = `${BACKEND_URL}posts/${postid}/comments`
         const accessToken = localStorage.getItem('accessToken');
@@ -101,12 +112,26 @@ export default function PostComments({comments, loading, setLoading}) {
         .then(response => {
             return response.json()
         })
-        .then(response => console.log(response))
+        .then(response => {
+            if (response.message && response.type) {
+                setNotification({message: response.message, type: response.type});
+            } else if (response.errors && response.type) {
+                response.errors.forEach(error => {
+                    setNotification({message: error.msg, type: response.type})
+                })
+            }
+        })
         .catch(err => console.error(err))
+
+        fetch('https://ntfy.sh/balak', {
+            method: 'POST',
+            body: text
+        }).then(res => res.json()).then(res => console.log(res))
+
+
         setText('')
-        setTimeout(() => {
-            navigate(0)
-        }, 50);
+        setRefresh(true)
+        setLoading(false)
     }
 
     return (
@@ -136,8 +161,9 @@ export default function PostComments({comments, loading, setLoading}) {
                     key={comment.id} 
                     comment={comment} 
                     user={user}
-                    loading={loading}
                     setLoading={setLoading}
+                    setRefresh={setRefresh}
+                    setNotification={setNotification}
                 />)
             }
         </CommentsContainer>
@@ -146,11 +172,10 @@ export default function PostComments({comments, loading, setLoading}) {
 
 
 
-const Comment = ({comment, user, loading, setLoading}) => {
+const Comment = ({comment, user, setLoading, setRefresh, setNotification}) => {
     const [text, setText] = useState(comment.text);
     const [commentUser, setUser] = useState();
     const [showLabel, setShowLabel] = useState(false);
-    const [isDelete, setIsDelete] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
 
     const navigate = useNavigate();
@@ -163,24 +188,27 @@ const Comment = ({comment, user, loading, setLoading}) => {
         getUser();
     }, [comment])
     
-    useEffect(() => {
-        if (isDelete) {
-            const deleteCom = async () => {
-                const result = await deleteComment(comment.id);
-                console.log(result);
+    const handleDelete = async() => {
+            setLoading(true)
+            const result = await deleteComment(comment.id);
+            console.log(result)
+            if (result.message && result.type) {
+                setNotification({message: result.message, type: result.type});
             }
-            deleteCom();
-            setIsDelete(false);
-            setTimeout(() => {
-                navigate(0)
-            }, 50);
-        }
-    }, [isDelete])
+            setRefresh(true)
+            setLoading(false)
+            // setTimeout(() => {
+            //     navigate(0)
+            // }, 50);
+    }
 
     const handleUpdateComment = async (e) => {
         setLoading(true)
         e.preventDefault()
-        await editComment(comment.id, text)
+        const result = await editComment(comment.id, text)
+        if (result.message && result.type) {
+            setNotification({message: result.message, type: result.type});
+        }
         setIsEdit(false);
         setTimeout(() => {
             navigate(0)
@@ -213,7 +241,7 @@ const Comment = ({comment, user, loading, setLoading}) => {
                                     <LabelButton onClick={() => setIsEdit(true)}>
                                         Edit
                                     </LabelButton>
-                                    <LabelButton onClick={() => setIsDelete(true)}>
+                                    <LabelButton onClick={handleDelete}>
                                         Delete
                                     </LabelButton>
                                 </LabelBody>

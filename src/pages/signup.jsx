@@ -43,7 +43,7 @@ const SignupPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] =  useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const {user} = useOutletContext();
+    const {user, setNotification} = useOutletContext();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -63,7 +63,24 @@ const SignupPage = () => {
             body: JSON.stringify({username, password, email, confirmPassword})
         })
         .then(response => response.json())
-        .then(response => console.log(response));
+        .then(response => {
+            if (response.message && response.type) {
+                setNotification({message: response.message, type: response.type});
+            } else if (response.errors && response.type) {
+                const errors= response.errors;
+                const type = response.type;
+                for (let i=0; i < errors.length; i++) {
+                    task(i);
+                }
+
+                function task(i) {
+                    setTimeout(() => {
+                        console.log(errors[i])
+                        setNotification({message: errors[i].msg, type})
+                    }, 1000 * i);
+                }
+            }
+        });
         return redirect('/')
     }
     

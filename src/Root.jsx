@@ -2,7 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components';
 import { Momentum } from 'ldrs/react';
+import { toast} from 'react-toastify'
 import 'ldrs/react/Momentum.css'
+import Notification from './components/notification';
 
 export const BACKEND_URL = "http://localhost:8000/"
 
@@ -29,6 +31,8 @@ export default function Root() {
     const [posts, setPosts] = useState([])
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [refresh, setRefresh] = useState(true);
+    const [notification, setNotification] = useState({});
     
     const refreshToken = localStorage.getItem('refreshToken');
     useEffect(() => {
@@ -50,17 +54,46 @@ export default function Root() {
     }, [refreshToken])
 
     useEffect(() => {
-        fetch(`${BACKEND_URL}posts`)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            return setPosts(data)
-        })
-        .catch(e => console.error(e));
-    }, [])
+        if (refresh) {
+            fetch(`${BACKEND_URL}posts`)
+            .then(response => {
+                return response.json()
+            })
+            .then(data => {
+                return setPosts(data)
+            })
+            .catch(e => console.error(e));
+        }
+        setRefresh(false)
+    }, [refresh])
+
+    useEffect(() => {
+        if (notification.message) {
+            console.log(notification)
+            switch (notification.type) {
+                case 'success':
+                    toast.success(notification.message)
+                    break;
+                case 'info':
+                    toast.info(notification.message);
+                    break;
+                case 'error':
+                    toast.error(notification.message)
+                    break;
+                case 'warn':
+                    toast.warn(notification.message);
+                    break;
+                default:
+                    toast(notification.message)
+                    break;
+            }
+        }
+        setNotification({})
+    }, [notification.message])
+
     return (
-        <>
+        <>  
+            <Notification />
             {loading &&
                 <LoadingDialog open>
                     <Momentum size={80} color='#0066da'/>
@@ -68,7 +101,7 @@ export default function Root() {
                 </LoadingDialog>
             }
             <Outlet 
-                context={{posts, user, setUser, setLoading}}
+                context={{posts, user, setUser, setLoading, setRefresh, setNotification, refresh}}
             />
         </>
     )

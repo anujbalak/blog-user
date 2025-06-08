@@ -40,7 +40,7 @@ const AlternateLoginHint = styled.span`
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {user, setUser, setLoading} = useOutletContext();
+    const {user, setUser, setLoading, setNotification} = useOutletContext();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -66,8 +66,11 @@ const LoginPage = () => {
         })
         .then(response => response.json())
         .then(response => {
+            if (response.message && response.type) {
+                setNotification({message: response.message, type: response.type});
+            }
             if (!response.user) {
-                return console.log(response);
+                return
             }
             saveTokens(response.accessToken, response.refreshToken)
             return setUser(response.user);
