@@ -17,6 +17,7 @@
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1",
     "react-textarea-autosize": "^8.5.9",
+    "react-toastify": "^11.0.5",
     "styled": "^1.0.0",
     "styled-components": "^6.1.18"
   },
