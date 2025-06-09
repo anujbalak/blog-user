@@ -6,7 +6,7 @@ import { toast} from 'react-toastify'
 import 'ldrs/react/Momentum.css'
 import Notification from './components/notification';
 
-export const BACKEND_URL = "http://localhost:8000/"
+export const BACKEND_URL = "https://blog-api-backend-xm9k.onrender.com/"
 
 const LoadingDialog = styled.dialog`
     background-color: transparent;
