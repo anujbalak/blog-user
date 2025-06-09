@@ -5,13 +5,14 @@ import Post from "../pages/post";
 import SignupPage from "../pages/signup";
 import Root from "../Root";
 import Account from "../pages/account";
+import Error from "../components/error";
 
 
 const routes = [
     {
         path: "/",
         element: <Root/>,
-        errorElement: '',
+        errorElement: <Error />,
         children: [
             {
                 index: true,
