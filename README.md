@@ -111,3 +111,6 @@ Blog Backend Repo: [https://github.com/anujbalak/blog-api-backend](https://githu
 [Eslint-url]: https://eslint.org/
 
 [Home-image]: ./public/screenshot/home.png
+
+[Cloudflare]: https://img.shields.io/badge/cloudflare-%23402108?style=for-the-badge&logo=cloudflare
+[Cloudflare-url]: https://cloudflare.com/
