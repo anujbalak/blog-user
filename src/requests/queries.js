@@ -166,3 +166,32 @@ export const logout = async (accessToken, refreshToken) => {
         console.log(error);        
     }
 }
+
+
+
+
+export async function fetchAuthor(id) {
+    try {
+        let result = null;
+        const url = `${BACKEND_URL}author/${id}`
+        await fetch(url)
+                .then(res => res.json())
+                .then(res => result = res)
+        return result
+    } catch (error) {
+        console.error(error.message);        
+    }
+}
+
+export async function fetchPost(id) {
+    try {
+        let result = null;
+        const url = `${BACKEND_URL}posts/${id}`
+        await fetch(url)
+                .then(res => res.json())
+                .then(res => result = res)
+        return result
+    } catch (error) {
+        console.error(error.message);        
+    }
+}

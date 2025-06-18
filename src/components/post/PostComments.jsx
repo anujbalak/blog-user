@@ -94,7 +94,7 @@ export default function PostComments({postComments}) {
             }
             getComments()
         }
-    }, [refresh])
+    }, [refresh, postid])
 
     const handleCommentAdd = async (e) => {
         setLoading(true);

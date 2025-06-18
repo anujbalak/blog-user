@@ -11,6 +11,7 @@ import { LoadingContainer, LoadingText } from "./home";
 import PostTitle from "../components/post/PostTitle";
 import PostBody from "../components/post/PostBody";
 import PostComments from "../components/post/PostComments";
+import { fetchPost } from "../requests/queries";
 
 
 const PostPage = styled.div`
@@ -85,17 +86,4 @@ export default function Post() {
             }
         </PostPage>
     )
-}
-
-export async function fetchPost(id) {
-    try {
-        let result = null;
-        const url = `${BACKEND_URL}posts/${id}`
-        await fetch(url)
-                .then(res => res.json())
-                .then(res => result = res)
-        return result
-    } catch (error) {
-        console.error(error.message);        
-    }
 }

@@ -43,7 +43,7 @@ export default function Account () {
             setUsername(user.username);
             setEmail(user.email)
         }
-    }, [user])
+    }, [user, navigate])
 
     const handleUsername = async (e) => {
         setLoading(true)

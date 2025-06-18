@@ -1,18 +1,11 @@
 import styled from "styled-components";
-import DOMPurify from 'dompurify'
+import { useSanitizedHtml } from "../../requests/sanitizeHtml";
 
 const PostBodyContainer = styled.div`
     margin: 1em 0;
     text-align: left;
     font-size: 1.3rem;
 `
-
-const PostText = styled.p`
-`
-
-export const useSanitizedHtml = (htmlString) => {
-    return DOMPurify.sanitize(htmlString);
-}
 
 export default function PostBody({text}) {
 

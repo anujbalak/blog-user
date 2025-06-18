@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BACKEND_URL } from "../../Root";
+import { fetchAuthor } from "../../requests/queries";
 
 const PostTitleContainer = styled.div`
     display: flex;
@@ -32,6 +32,7 @@ export default function PostTitle ({authorid, date, title}) {
             setAuthor(user);
        }
        getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     const createdAt = new Date(date).toLocaleDateString()
@@ -48,17 +49,4 @@ export default function PostTitle ({authorid, date, title}) {
             </PostCreate>        
         </PostTitleContainer>
     )
-}
-
-export async function fetchAuthor(id) {
-    try {
-        let result = null;
-        const url = `${BACKEND_URL}author/${id}`
-        await fetch(url)
-                .then(res => res.json())
-                .then(res => result = res)
-        return result
-    } catch (error) {
-        console.error(error.message);        
-    }
 }

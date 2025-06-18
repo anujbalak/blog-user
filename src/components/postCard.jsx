@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { useSanitizedHtml } from './post/PostBody'
+import { useSanitizedHtml } from "../requests/sanitizeHtml";
+
 
 const Card = styled.div`
     width: 80%;

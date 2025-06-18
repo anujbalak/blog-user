@@ -48,7 +48,7 @@ const LoginPage = () => {
             navigate('/', {replace: true});
         }
 
-    }, [user]);
+    }, [user, navigate]);
 
 
     const handleLogin = async (e) => {
@@ -118,14 +118,5 @@ const saveTokens = (accessToken, refreshToken) => {
     localStorage.setItem('refreshToken', refreshToken)
     return;
 }
-
-export const loginLoader = () => {
-    const { user} = useOutletContext()
-    console.log(user);
-    /* if (user) {
-        return redirect('/')
-    } */
-}
-
 
 export default LoginPage;

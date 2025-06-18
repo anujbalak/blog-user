@@ -32,7 +32,7 @@ export default function Root() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [refresh, setRefresh] = useState(true);
-    const [notification, setNotification] = useState({});
+    const [notification, setNotification] = useState();
     
     const refreshToken = localStorage.getItem('refreshToken');
     useEffect(() => {
@@ -68,8 +68,7 @@ export default function Root() {
     }, [refresh])
 
     useEffect(() => {
-        if (notification.message) {
-            console.log(notification)
+        if (notification) {
             switch (notification.type) {
                 case 'success':
                     toast.success(notification.message)
@@ -88,8 +87,8 @@ export default function Root() {
                     break;
             }
         }
-        setNotification({})
-    }, [notification.message])
+        setNotification()
+    }, [notification])
 
     return (
         <>  

@@ -8,7 +8,7 @@ const ButtonComponent = styled.button`
 export default function Button(props) {
     return(
         <>
-            {Boolean(props.path) ?
+            {Boolean(props.path) === true ?
                 <Link to={`/${props.path}`}>
                     <ButtonComponent>
                             {props.name}
