@@ -22,7 +22,10 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Live 
+Checkout the website at 
 
+> [https://9019703e.blog-user.pages.dev/](https://9019703e.blog-user.pages.dev/ "Blog App")
 
 <!-- GETTING STARTED -->
 ## Getting Started
