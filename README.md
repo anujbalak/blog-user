@@ -19,10 +19,37 @@
 * [![Styled-components][Styled-componets.js]][Styled-components-url]
 * [![Eslint][Eslint.js]][Eslint-url]
 * [![Cloudflare][Cloudflare]][Cloudflare-url]
+* [![Toastify][Toastify]][Toastify-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Live 
+## Features
+###  🔐 Authentication
+
+Multiple Authentication Strategies: Support for both JWT and Local authentication via Passport.js
+Secure User Management: Users can register, login, and manage their accounts
+Profile Management: Edit user information including email and other profile details
+
+### 📝 Blog Functionality
+
+Read Posts: Browse and read blog posts with a clean, user-friendly interface
+Comment System: Full CRUD operations for comments
+
+Create new comments on posts
+Read and view comments
+Edit your own comments
+Delete your own comments
+
+
+
+### 🎨 User Interface
+
+Modern UI: Clean and intuitive design for optimal user experience
+Responsive Design: Works seamlessly across different devices and screen sizes
+User-Friendly Navigation: Easy-to-use interface for all features
+
+
+## 💻 Live 
 Checkout the website at 
 
 > [https://9019703e.blog-user.pages.dev/](https://9019703e.blog-user.pages.dev/ "Blog App")
@@ -117,3 +144,7 @@ Blog Backend Repo: [https://github.com/anujbalak/blog-api-backend](https://githu
 
 [Cloudflare]: https://img.shields.io/badge/cloudflare-%23402108?style=for-the-badge&logo=cloudflare
 [Cloudflare-url]: https://cloudflare.com/
+
+[Toastify]: https://img.shields.io/npm/v/react-toastify?style=for-the-badge&label=react-toastify&labelColor=black
+
+[Toastify-url]: https://fkhadra.github.io/react-toastify/introduction
